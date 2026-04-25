@@ -35,6 +35,9 @@ class Settings(BaseSettings):
     # Google Maps
     GOOGLE_MAPS_API_KEY: str = ""
 
+    # One-time admin setup (remove after use)
+    SETUP_TOKEN: str = ""
+
     @property
     def allowed_origins_list(self) -> list[str]:
         return [o.strip() for o in self.ALLOWED_ORIGINS.split(",")]
