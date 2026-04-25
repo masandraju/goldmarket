@@ -6,8 +6,12 @@ from app.core.config import settings
 from app.db.base import Base
 import app.models  # noqa: F401 — ensures all models are registered
 
+def _async_url(url: str) -> str:
+    # Railway provides postgresql:// — SQLAlchemy async needs postgresql+asyncpg://
+    return url.replace("postgresql://", "postgresql+asyncpg://", 1)
+
 config = context.config
-config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
+config.set_main_option("sqlalchemy.url", _async_url(settings.DATABASE_URL))
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
@@ -29,7 +33,7 @@ def do_run_migrations(connection):
 
 
 async def run_async_migrations() -> None:
-    engine = create_async_engine(settings.DATABASE_URL)
+    engine = create_async_engine(_async_url(settings.DATABASE_URL))
     async with engine.begin() as conn:
         await conn.run_sync(do_run_migrations)
     await engine.dispose()
