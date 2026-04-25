@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from app.db.session import get_db
 from app.models.user import User, UserRole
 from app.models.gold_account import GoldAccount
-from app.core.security import get_password_hash
+from app.core.security import hash_password
 from app.core.config import settings
 
 router = APIRouter(prefix="/setup", tags=["setup"])
@@ -32,7 +32,7 @@ async def create_admin(payload: AdminSetupPayload, db: AsyncSession = Depends(ge
         email=payload.email,
         phone=payload.phone,
         full_name=payload.full_name,
-        hashed_password=get_password_hash(payload.password),
+        hashed_password=hash_password(payload.password),
         role=UserRole.SUPER_ADMIN,
         is_active=True,
     )
