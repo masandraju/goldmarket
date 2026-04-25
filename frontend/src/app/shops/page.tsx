@@ -294,13 +294,7 @@ export default function ShopsPage() {
           ) : (
             <>
               <p className="text-gray-400 font-medium mb-1">No shops yet in this area</p>
-              <p className="text-gray-600 text-sm">Be the first jeweller to list on GoldMarket!</p>
-              <Link
-                href="/register?role=jeweller"
-                className="mt-6 text-sm text-amber-400 border border-amber-500/20 px-4 py-2 rounded-lg hover:border-amber-500/40 transition-all"
-              >
-                Register as Jeweller
-              </Link>
+              <p className="text-gray-600 text-sm">Jewellers are being onboarded — check back soon.</p>
             </>
           )}
         </div>
